@@ -14,7 +14,10 @@ public class testBreadthFirstSearch {
         g.addEdge(1, 5);
         g.addEdge(4, 2);
         g.addEdge(4, 5);
+        System.out.print("BFS from node 1: ");
         BreadthFirstSearch.printBFS(g, 1);
-
+        System.out.println();
+        System.out.print("BFS the whole graph: ");
+        BreadthFirstSearch.printBFS(g);
     }
 }
