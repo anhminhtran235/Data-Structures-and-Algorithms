@@ -1,5 +1,8 @@
 package Graph.main.unweighted;
 
+/**
+ * EdgeNode for Adjacency list implementation of Graph
+ */
 public class EdgeNode {
     public int y;
     public EdgeNode next;

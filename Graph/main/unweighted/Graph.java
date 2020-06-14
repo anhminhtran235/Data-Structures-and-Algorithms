@@ -3,6 +3,10 @@ package Graph.main.unweighted;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of unweighted Graph using adjacency list representation
+ * This graph can be either undirected or directed.
+ */
 public class Graph {
     List<EdgeNode> edges;
     boolean isDirected;
@@ -31,7 +35,9 @@ public class Graph {
         addEdge(from, to, this.isDirected);
     }
 
-    // Allow multi edge. Also, notice the recursive call when graph is undirected
+    /**
+     * Allow multi edge. Also, notice the recursive call when the graph is undirected
+    **/
     private void addEdge(int from, int to, boolean isDirected) {
         EdgeNode head = edges.get(from);
         if (head == null) {
