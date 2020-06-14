@@ -36,7 +36,7 @@ public class Graph {
     }
 
     /**
-     * Allow multi edge. Also, notice the recursive call when the graph is undirected
+     * Allow multi edge and self loop. Also, notice the recursive call when the graph is undirected
     **/
     private void addEdge(int from, int to, boolean isDirected) {
         EdgeNode head = edges.get(from);
@@ -61,5 +61,19 @@ public class Graph {
             }
             System.out.println();
         }
+    }
+
+    /**
+     * Allow multi edge and self loop
+     */
+    public static Graph generateRandomGraph(int numVertices, int numEdges, boolean isDirected) {
+        Graph g = new Graph(numVertices, isDirected);
+        for (int i = 0; i < numEdges; i++) {
+            int vertex1 = (int)(Math.random() * numVertices);
+            int vertex2 = (int)(Math.random() * numVertices);
+            g.addEdge(vertex1, vertex2);
+        }
+
+        return g;
     }
 }
