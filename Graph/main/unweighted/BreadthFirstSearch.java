@@ -56,9 +56,9 @@ public class BreadthFirstSearch {
             if (print) {
                 System.out.print(node + "(parent:" + parent[node] + ") ");
             }
-            EdgeNode p = g.edges.get(node);
+            Node p = g.edges.get(node);
             while (p != null) {
-                int successorNode = p.y;
+                int successorNode = p.id;
                 if (!visited[successorNode]) {
                     visited[successorNode] = true;
                     parent[successorNode] = node;

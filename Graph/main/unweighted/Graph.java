@@ -8,7 +8,7 @@ import java.util.List;
  * This graph can be either undirected or directed.
  */
 public class Graph {
-    List<EdgeNode> edges;
+    List<Node> edges;
     boolean isDirected;
     int numNodes;
 
@@ -39,11 +39,11 @@ public class Graph {
      * Allow multi edge and self loop. Also, notice the recursive call when the graph is undirected
     **/
     private void addEdge(int from, int to, boolean isDirected) {
-        EdgeNode head = edges.get(from);
+        Node head = edges.get(from);
         if (head == null) {
-            edges.set(from, new EdgeNode(to, null));
+            edges.set(from, new Node(to, null));
         } else {
-            edges.set(from, new EdgeNode(to, head));
+            edges.set(from, new Node(to, head));
         }
 
         if (isDirected == false) {
@@ -54,9 +54,9 @@ public class Graph {
     public void printGraph() {
         for (int i = 0; i < edges.size(); i++) {
             System.out.print(i);
-            EdgeNode edgeTemp = edges.get(i);
+            Node edgeTemp = edges.get(i);
             while (edgeTemp != null) {
-                System.out.print("->" + edgeTemp.y);
+                System.out.print("->" + edgeTemp.id);
                 edgeTemp = edgeTemp.next;
             }
             System.out.println();
