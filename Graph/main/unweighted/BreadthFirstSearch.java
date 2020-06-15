@@ -69,6 +69,10 @@ public class BreadthFirstSearch {
         }
     }
 
+    /**
+     * Find path from source to destination. This function can be optimize a lot more,
+     * by terminating when visit destination. But I want to reuse bfs()
+     */
     public static void findPath(Graph g, int source, int destination) {
         if (g == null) {
             throw new InvalidParameterException("null graph");

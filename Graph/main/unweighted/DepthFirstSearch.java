@@ -7,6 +7,9 @@ import java.util.Stack;
 public class DepthFirstSearch {
     private static int time;
 
+    /**
+     * Print DFS the whole graph
+     */
     public static void printDFS(Graph g) {
         if (g == null) {
             throw new InvalidParameterException("null graph");
@@ -25,6 +28,9 @@ public class DepthFirstSearch {
         }
     }
 
+    /**
+     * Print DFS from start node
+     */
     public static void printDFS(Graph g, int start) {
         if (g == null) {
             throw new InvalidParameterException("null graph");
@@ -39,6 +45,9 @@ public class DepthFirstSearch {
         dfs(g, start, visited, parent, entryTime, exitTime, true);
     }
 
+    /**
+     * Main logic of DFS
+     */
     private static void dfs(Graph g, int start, boolean[] visited, int[] parent,
                              int[] entryTime, int[] exitTime, boolean print) {
         
@@ -61,6 +70,10 @@ public class DepthFirstSearch {
         }
     }
 
+    /**
+     * Find path from source to destination. This function can be optimize a lot more,
+     * by terminating when visit destination. But I want to reuse dfs()
+     */
     public static void findPath(Graph g, int source, int destination) {
         if (g == null) {
             throw new InvalidParameterException("null graph");
