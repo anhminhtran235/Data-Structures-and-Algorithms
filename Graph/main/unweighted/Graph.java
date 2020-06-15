@@ -8,18 +8,27 @@ import java.util.List;
  * This graph can be either undirected or directed.
  */
 public class Graph {
-    List<Node> edges;
+    List<Node> nodes;
     boolean isDirected;
     int numNodes;
+
+    public static class Node {
+        public int id;
+        public Node next;
+        public Node(int y, Node next) {
+            this.id = y;
+            this.next = next;
+        }
+    }
 
     public Graph(int numNodes, boolean isDirected) {
         if (numNodes < 0) {
             throw new IndexOutOfBoundsException("Number of nodes cannot be negative");
         }
 
-        edges = new ArrayList<>(numNodes);
+        nodes = new ArrayList<>(numNodes);
         for (int i = 0; i < numNodes; i++) {
-            edges.add(null);
+            nodes.add(null);
         }
         this.isDirected = isDirected;
         this.numNodes = numNodes;
@@ -39,11 +48,11 @@ public class Graph {
      * Allow multi edge and self loop. Also, notice the recursive call when the graph is undirected
     **/
     private void addEdge(int from, int to, boolean isDirected) {
-        Node head = edges.get(from);
+        Node head = nodes.get(from);
         if (head == null) {
-            edges.set(from, new Node(to, null));
+            nodes.set(from, new Node(to, null));
         } else {
-            edges.set(from, new Node(to, head));
+            nodes.set(from, new Node(to, head));
         }
 
         if (isDirected == false) {
@@ -52,12 +61,12 @@ public class Graph {
     }
 
     public void printGraph() {
-        for (int i = 0; i < edges.size(); i++) {
+        for (int i = 0; i < nodes.size(); i++) {
             System.out.print(i);
-            Node edgeTemp = edges.get(i);
-            while (edgeTemp != null) {
-                System.out.print("->" + edgeTemp.id);
-                edgeTemp = edgeTemp.next;
+            Node nodeTemp = nodes.get(i);
+            while (nodeTemp != null) {
+                System.out.print("->" + nodeTemp.id);
+                nodeTemp = nodeTemp.next;
             }
             System.out.println();
         }

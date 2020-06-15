@@ -56,7 +56,7 @@ public class BreadthFirstSearch {
             if (print) {
                 System.out.print(node + "(parent:" + parent[node] + ") ");
             }
-            Node p = g.edges.get(node);
+            Graph.Node p = g.nodes.get(node);
             while (p != null) {
                 int successorNode = p.id;
                 if (!visited[successorNode]) {
