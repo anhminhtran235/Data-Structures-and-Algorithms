@@ -17,5 +17,8 @@ public class testBreadthFirstSearch {
         System.out.println();
         System.out.print("BFS the whole graph: ");
         BreadthFirstSearch.printBFS(g);
+        System.out.println();
+        System.out.print("Path from 1 to 2: ");
+        BreadthFirstSearch.findPath(g, 1, 2);
     }
 }
