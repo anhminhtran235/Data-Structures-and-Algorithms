@@ -4,6 +4,9 @@ import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Stack;
 
+/**
+ * A class that contains implementation of DFS
+ */
 public class DepthFirstSearch {
     private static int time;
 
@@ -15,6 +18,7 @@ public class DepthFirstSearch {
             throw new InvalidParameterException("null graph");
         }
 
+        time = 0;
         boolean[] visited = new boolean[g.numNodes];
         int[] parent = new int[g.numNodes];
         Arrays.fill(parent, -1);
@@ -38,6 +42,7 @@ public class DepthFirstSearch {
             throw new IndexOutOfBoundsException("Invalid starting point: " + start);
         }
 
+        time = 0;
         boolean[] visited = new boolean[g.numNodes];
         int[] parent = new int[g.numNodes];
         int[] entryTime = new int[g.numNodes];
@@ -83,6 +88,7 @@ public class DepthFirstSearch {
             throw new IndexOutOfBoundsException("Invalid destination: " + destination);
         }
 
+        time = 0;
         boolean[] visited = new boolean[g.numNodes];
         int[] parent = new int[g.numNodes];
         Arrays.fill(parent, -1);

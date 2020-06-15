@@ -3,9 +3,6 @@ package Graph.test.unweighted;
 import Graph.main.unweighted.DepthFirstSearch;
 import Graph.main.unweighted.Graph;
 
-/**
- * testDepthFirstSearch
- */
 public class testDepthFirstSearch {
 
     public static void main(String[] args) {
