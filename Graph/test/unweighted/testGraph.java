@@ -4,7 +4,9 @@ import Graph.main.unweighted.Graph;
 
 public class testGraph {
     public static void main(String[] args) {
-        Graph g = new Graph(6, false); // This graph allows multi edge
+        int numVertices = 6;
+        boolean isDirected = true;
+        Graph g = new Graph(numVertices, isDirected); // This graph allows multi edge
         g.addEdge(1, 2);
         g.addEdge(1, 2);
         g.addEdge(2, 4);
@@ -13,6 +15,7 @@ public class testGraph {
         g.addEdge(1, 5);
         g.addEdge(4, 2);
         g.addEdge(4, 5);
+        System.out.println("Graph " + (isDirected ? "(directed):" : "(undirected):"));
         g.printGraph();
     }
 }

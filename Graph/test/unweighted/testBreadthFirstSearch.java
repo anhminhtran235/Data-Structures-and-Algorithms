@@ -10,7 +10,7 @@ public class testBreadthFirstSearch {
         boolean isDirected = true;
         Graph g = Graph.generateRandomGraph(numVertices, numEdges, isDirected); // Allow multi edge and self loop
 
-        System.out.println("Graph: ");
+        System.out.println("Graph " + (isDirected ? "(directed):" : "(undirected):"));
         g.printGraph();
         System.out.print("BFS from node 1: ");
         BreadthFirstSearch.printBFS(g, 1);
