@@ -13,7 +13,10 @@ public class testTopologicalSort {
         System.out.println("Graph " + (isDirected ? "(directed):" : "(undirected):"));
         g.printGraph();
         System.out.println();
-        System.out.print("Topo sort: ");
+        System.out.print("Topo sort DFS: ");
         TopologicalSort.topoSortDFS(g);
+        System.out.println();
+        System.out.print("Topo sort BFS: ");
+        TopologicalSort.topoSortBFS(g);
     }
 }

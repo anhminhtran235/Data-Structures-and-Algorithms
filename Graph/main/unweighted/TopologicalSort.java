@@ -1,6 +1,7 @@
 package Graph.main.unweighted;
 
 import java.security.InvalidParameterException;
+import java.util.*;
 
 public class TopologicalSort {
     public static void topoSortDFS(Graph g) {
@@ -31,5 +32,45 @@ public class TopologicalSort {
             }
         }
         System.out.print(source.id + " ");
+    }
+
+    public static void topoSortBFS(Graph g) {
+        int[] inDegree = new int[g.numNodes];
+        Queue<Integer> sourceVertex = new LinkedList<>();
+        List<Integer> topoOrder = new ArrayList<>();
+
+        // Init inDegree arr
+        for (int i = 0; i < inDegree.length; i++) {
+            for (Graph.Node adjNode: g.nodes.get(i)) {
+                inDegree[adjNode.id]++;
+            }
+        }
+
+        // Find source nodes
+        for (int i = 0; i < g.numNodes; i++) {
+            if (inDegree[i] == 0) {
+                sourceVertex.add(i);
+            }
+        }
+
+        // Take each source out
+        while (!sourceVertex.isEmpty()) {
+            int source = sourceVertex.poll();
+            topoOrder.add(source);
+            for (Graph.Node adjNode: g.nodes.get(source)) {
+                inDegree[adjNode.id]--;
+                if (inDegree[adjNode.id] == 0) {
+                    sourceVertex.add(adjNode.id);
+                }
+            }
+        }
+
+        if (topoOrder.size() != g.numNodes) {
+            System.out.println("Graph contains a cycle. Topo ordering does not exist");
+        } else {
+            for (int i = topoOrder.size() - 1; i >= 0; i--) { // Print backwards
+                System.out.print(topoOrder.get(i) + " "); 
+            }
+        }
     }
 }
