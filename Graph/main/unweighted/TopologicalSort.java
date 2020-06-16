@@ -37,6 +37,8 @@ public class TopologicalSort {
                 topoDFS(g, adjNode, visited, topoOrdering);
             }
         }
+        // When we push 'source' to the stack, all nodes that depend on 'source', either directly or indirectly
+        // has been pushed in the stack
         topoOrdering.push(source.id);
     }
 
