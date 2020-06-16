@@ -6,7 +6,7 @@ public class testGraph {
     public static void main(String[] args) {
         int numVertices = 6;
         boolean isDirected = true;
-        Graph g = new Graph(numVertices, isDirected); // This graph allows multi edge
+        Graph g = new Graph(numVertices, isDirected);
         g.addEdge(1, 2);
         g.addEdge(1, 2);
         g.addEdge(2, 4);

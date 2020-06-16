@@ -8,7 +8,7 @@ public class testBreadthFirstSearch {
         int numVertices = 5;
         int numEdges = 7;
         boolean isDirected = true;
-        Graph g = Graph.generateRandomGraph(numVertices, numEdges, isDirected); // Allow multi edge and self loop
+        Graph g = Graph.generateRandomGraph(numVertices, numEdges, isDirected); // Not allow multi edge or self loop
 
         System.out.println("Graph " + (isDirected ? "(directed):" : "(undirected):"));
         g.printGraph();

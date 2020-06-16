@@ -22,7 +22,7 @@ public class BreadthFirstSearch {
 
         for (int i = 0; i < g.numNodes; i++) {
             if (!visited[i]) {
-                bfs(g, i, visited, parent, true);
+                bfs(g, new Graph.Node(i), visited, parent, true);
             }
         }
     }
@@ -40,31 +40,28 @@ public class BreadthFirstSearch {
         boolean[] visited = new boolean[g.numNodes];
         int[] parent = new int[g.numNodes];
         Arrays.fill(parent, -1);
-        bfs(g, start, visited, parent, true);
+        bfs(g, new Graph.Node(start), visited, parent, true);
     }
 
     /**
      * Main logic of bfs
      */
-    private static void bfs(Graph g, int start, boolean[] visited, int[] parent, boolean print) {
-        Queue<Integer> queue = new LinkedList<>();
+    private static void bfs(Graph g, Graph.Node start, boolean[] visited, int[] parent, boolean print) {
+        Queue<Graph.Node> queue = new LinkedList<>();
         queue.add(start);
-        visited[start] = true;
+        visited[start.id] = true;
 
         while (!queue.isEmpty()) {
-            int node = queue.poll();
+            Graph.Node node = queue.poll();
             if (print) {
-                System.out.print(node + "(parent:" + parent[node] + ") ");
+                System.out.print(node.id + "(parent:" + parent[node.id] + ") ");
             }
-            Graph.Node p = g.nodes.get(node);
-            while (p != null) {
-                int successorNode = p.id;
-                if (!visited[successorNode]) {
-                    visited[successorNode] = true;
-                    parent[successorNode] = node;
+            for (Graph.Node successorNode: g.nodes.get(node.id)) {
+                if (!visited[successorNode.id]) {
+                    visited[successorNode.id] = true;
+                    parent[successorNode.id] = node.id;
                     queue.add(successorNode);
                 }
-                p = p.next;
             }
         }
     }
@@ -86,7 +83,7 @@ public class BreadthFirstSearch {
         int[] parent = new int[g.numNodes];
         Arrays.fill(parent, -1);
         
-        bfs(g, source, visited, parent, false);       
+        bfs(g, new Graph.Node(source), visited, parent, false);       
         printPath(source, destination, parent);
     } 
 

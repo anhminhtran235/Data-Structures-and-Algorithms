@@ -27,7 +27,7 @@ public class DepthFirstSearch {
 
         for (int i = 0 ; i < g.numNodes; i++) {
             if (!visited[i]) {
-                dfs(g, i, visited, parent, entryTime, exitTime, true);
+                dfs(g, new Graph.Node(i), visited, parent, entryTime, exitTime, true);
             }
         }
     }
@@ -47,31 +47,30 @@ public class DepthFirstSearch {
         int[] parent = new int[g.numNodes];
         int[] entryTime = new int[g.numNodes];
         int[] exitTime = new int[g.numNodes];
-        dfs(g, start, visited, parent, entryTime, exitTime, true);
+        dfs(g, new Graph.Node(start), visited, parent, entryTime, exitTime, true);
     }
 
     /**
      * Main logic of DFS
      */
-    private static void dfs(Graph g, int start, boolean[] visited, int[] parent,
+    private static void dfs(Graph g, Graph.Node start, boolean[] visited, int[] parent,
                              int[] entryTime, int[] exitTime, boolean print) {
         
-        visited[start] = true;
-        entryTime[start] = time++;
+        visited[start.id] = true;
+        entryTime[start.id] = time++;
         if (print) {
-            System.out.print("Visited " + start + " (parent: " + parent[start] + "), ");
+            System.out.print("Visited " + start.id + " (parent: " + parent[start.id] + "), ");
         }
-        Graph.Node p = g.nodes.get(start);
-        while (p != null) {
-            if (!visited[p.id]) {
-                parent[p.id] = start;
-                dfs(g, p.id, visited, parent, entryTime, exitTime, print);
+
+       for (Graph.Node node: g.nodes.get(start.id)){
+            if (!visited[node.id]) {
+                parent[node.id] = start.id;
+                dfs(g, node, visited, parent, entryTime, exitTime, print);
             }
-            p = p.next;
         }
-        exitTime[start] = time++;
+        exitTime[start.id] = time++;
         if (print) {
-            System.out.print("Exited " + start + ", ");
+            System.out.print("Exited " + start.id + ", ");
         }
     }
 
@@ -95,7 +94,7 @@ public class DepthFirstSearch {
         int[] entryTime = new int[g.numNodes];
         int[] exitTime = new int[g.numNodes];
 
-        dfs(g, source, visited, parent, entryTime, exitTime, false);
+        dfs(g, new Graph.Node(source), visited, parent, entryTime, exitTime, false);
 
         printPath(source, destination, parent);
     }

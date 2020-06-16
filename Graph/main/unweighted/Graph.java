@@ -1,23 +1,31 @@
 package Graph.main.unweighted;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Implementation of unweighted Graph using adjacency list representation
  * This graph can be either undirected or directed.
  */
 public class Graph {
-    List<Node> nodes;
+    List<LinkedList<Node>> nodes;
     boolean isDirected;
     int numNodes;
 
     public static class Node {
         public int id;
-        public Node next;
-        public Node(int y, Node next) {
-            this.id = y;
-            this.next = next;
+        public Node(int id) {
+            this.id = id;
+        }
+        @Override
+        public boolean equals(Object other) {
+            if (other instanceof Node) {
+                return this.id == ((Node)other).id;
+            }
+            return false;
+        }
+        @Override
+        public int hashCode() {
+            return this.id;
         }
     }
 
@@ -28,7 +36,7 @@ public class Graph {
 
         nodes = new ArrayList<>(numNodes);
         for (int i = 0; i < numNodes; i++) {
-            nodes.add(null);
+            nodes.add(new LinkedList<Node>());
         }
         this.isDirected = isDirected;
         this.numNodes = numNodes;
@@ -45,42 +53,51 @@ public class Graph {
     }
 
     /**
-     * Allow multi edge and self loop. Also, notice the recursive call when the graph is undirected
-    **/
-    private void addEdge(int from, int to, boolean isDirected) {
-        Node head = nodes.get(from);
-        if (head == null) {
-            nodes.set(from, new Node(to, null));
-        } else {
-            nodes.set(from, new Node(to, head));
+     * Not allow self loop or multiedge
+     */
+    private boolean addEdge(int from, int to, boolean isDirected) {
+        if (from == to || this.nodes.get(from).contains(new Node(to))) {
+            return false;
         }
-
+        nodes.get(from).add(new Node(to));
         if (isDirected == false) {
-            addEdge(to, from, true);    // recursive call
+            nodes.get(to).add(new Node(from));
         }
+        return true;
     }
 
     public void printGraph() {
         for (int i = 0; i < nodes.size(); i++) {
             System.out.print(i);
-            Node nodeTemp = nodes.get(i);
-            while (nodeTemp != null) {
-                System.out.print("->" + nodeTemp.id);
-                nodeTemp = nodeTemp.next;
+            LinkedList<Node> nodeLL = nodes.get(i);
+            for (Node node : nodeLL) {
+                System.out.print("->" + node.id);
             }
             System.out.println();
         }
     }
 
+    public boolean hasEdge(int source, int destination) {
+        return this.nodes.get(source).contains(new Node(destination));
+    }
+
     /**
-     * Allow multi edge and self loop
+     * Not allow multi edge or self loop
      */
     public static Graph generateRandomGraph(int numVertices, int numEdges, boolean isDirected) {
+        if (isDirected && numEdges > numVertices * numVertices / 2
+            || !isDirected && numEdges > numVertices * numVertices) {
+                throw new IllegalArgumentException("Cannot have that many edges!");
+            }
+
         Graph g = new Graph(numVertices, isDirected);
         for (int i = 0; i < numEdges; i++) {
             int vertex1 = (int)(Math.random() * numVertices);
             int vertex2 = (int)(Math.random() * numVertices);
-            g.addEdge(vertex1, vertex2);
+            if (!g.addEdge(vertex1, vertex2, isDirected)) { // If fail to add edge
+                i--;
+                continue;
+            }
         }
 
         return g;
