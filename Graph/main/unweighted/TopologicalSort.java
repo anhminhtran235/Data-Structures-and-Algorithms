@@ -11,27 +11,33 @@ public class TopologicalSort {
             throw new InvalidParameterException("Topo sort only works for directed graph");
         }
 
+        // We can also check for cycle DURING topoDFS
         if (CycleDetection.hasCycleDFS(g)) {
             System.out.println("Graph contains a cycle. Topo ordering does not exist");
             return;
         } 
 
         boolean[] visited = new boolean[g.numNodes];
+        Stack<Integer> topoOrdering = new Stack<Integer>();
         for (int i = 0; i < g.numNodes; i++) {
             if (!visited[i]) {
-                printTopoDFS(g, new Graph.Node(i), visited);
+                topoDFS(g, new Graph.Node(i), visited, topoOrdering);
             }
+        }
+
+        while (!topoOrdering.isEmpty()) {
+            System.out.print(topoOrdering.pop() + " ");
         }
     }
 
-    private static void printTopoDFS(Graph g, Graph.Node source, boolean[] visited) {
+    private static void topoDFS(Graph g, Graph.Node source, boolean[] visited, Stack<Integer> topoOrdering) {
         visited[source.id] = true;
         for (Graph.Node adjNode: g.nodes.get(source.id)) {
             if (!visited[adjNode.id]) {
-                printTopoDFS(g, adjNode, visited);
+                topoDFS(g, adjNode, visited, topoOrdering);
             }
         }
-        System.out.print(source.id + " ");
+        topoOrdering.push(source.id);
     }
 
     public static void topoSortBFS(Graph g) {
@@ -68,7 +74,7 @@ public class TopologicalSort {
         if (topoOrder.size() != g.numNodes) {
             System.out.println("Graph contains a cycle. Topo ordering does not exist");
         } else {
-            for (int i = topoOrder.size() - 1; i >= 0; i--) { // Print backwards
+            for (int i = 0; i < topoOrder.size(); i++) {
                 System.out.print(topoOrder.get(i) + " "); 
             }
         }
