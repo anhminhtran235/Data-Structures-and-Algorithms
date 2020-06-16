@@ -5,8 +5,9 @@ import Graph.main.unweighted.StronglyConnectedComponent;
 
 public class testStronglyConnectedComponent {
     public static void main(String[] args) {
-        int numVertices = 50;
-        int numEdges = 40;
+        /* Undirected graph */
+        int numVertices = 5;
+        int numEdges = 4;
         boolean isDirected = false;
         Graph g = Graph.generateRandomGraph(numVertices, numEdges, isDirected);
 
@@ -14,6 +15,18 @@ public class testStronglyConnectedComponent {
         g.printGraph();
 
         System.out.println("Print all strongly connected components: ");
-        StronglyConnectedComponent.printStronglyConnectedComponent(g);
+        StronglyConnectedComponent.printSCC(g);
+
+        /* Directed graph */
+        numVertices = 5;
+        numEdges = 8;
+        isDirected = true;
+        g = Graph.generateRandomGraph(numVertices, numEdges, isDirected);
+
+        System.out.println("Graph " + (isDirected ? "(directed):" : "(undirected):"));
+        g.printGraph();
+
+        System.out.println("Print all strongly connected components: ");
+        StronglyConnectedComponent.printSCC(g);
     }
 }
