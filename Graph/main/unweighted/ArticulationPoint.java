@@ -17,11 +17,7 @@ public class ArticulationPoint {
             int[] parent = new int[g.numNodes];
             Arrays.fill(ids, -1);
             Arrays.fill(parent, -1);
-            for (int i = 0; i < g.numNodes; i++) {
-                if (ids[i] == -1) {
-                    DFS(g, i, ids, low, parent);
-                }
-            }
+            DFS(g, 0, ids, low, parent);
         }
     }
 
