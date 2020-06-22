@@ -41,7 +41,7 @@ public class StronglyConnectedComponent {
         while (!queue.isEmpty()) {
             Graph.Node node = queue.poll();
             System.out.print(node.id + " ");
-            for (Graph.Node adjNode: g.nodes.get(node.id)) {
+            for (Graph.Node adjNode: g.adjacencies.get(node.id)) {
                 if (!visited[adjNode.id]) {
                     queue.add(adjNode);
                     visited[adjNode.id] = true;
@@ -55,7 +55,7 @@ public class StronglyConnectedComponent {
         stack.push(at);
         onStack[at] = true;
         ids[at] = low[at] = StronglyConnectedComponent.id++;
-        for (Graph.Node toNode: g.nodes.get(at)) {
+        for (Graph.Node toNode: g.adjacencies.get(at)) {
             if (ids[toNode.id] == -1) {
                 printSCCDirected(g, toNode.id, ids, low, onStack, stack);
             }

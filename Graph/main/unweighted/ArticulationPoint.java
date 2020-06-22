@@ -26,7 +26,7 @@ public class ArticulationPoint {
         boolean isArticulation = false;
         int childCount = 0;
 
-        for (Graph.Node adj: g.nodes.get(at)) {
+        for (Graph.Node adj: g.adjacencies.get(at)) {
             if (ids[adj.id] == -1) {
                 parent[adj.id] = at;
                 DFS(g, adj.id, ids, low, parent);
@@ -61,7 +61,7 @@ public class ArticulationPoint {
         while (!queue.isEmpty()) {
             Graph.Node node = queue.poll();
             numVerticesVisited++;
-            for (Graph.Node adjNode: g.nodes.get(node.id)) {
+            for (Graph.Node adjNode: g.adjacencies.get(node.id)) {
                 if (!visited[adjNode.id]) {
                     visited[adjNode.id] = true;
                     queue.add(adjNode);

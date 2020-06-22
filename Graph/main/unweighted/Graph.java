@@ -5,9 +5,10 @@ import java.util.*;
 /**
  * Implementation of unweighted Graph using adjacency list representation
  * This graph can be either undirected or directed.
+ * Multi-edge and self loop are not allowed
  */
 public class Graph {
-    List<LinkedList<Node>> nodes;
+    List<LinkedList<Node>> adjacencies;
     boolean isDirected;
     int numNodes;
 
@@ -34,9 +35,9 @@ public class Graph {
             throw new IndexOutOfBoundsException("Number of nodes cannot be negative");
         }
 
-        nodes = new ArrayList<>(numNodes);
+        adjacencies = new ArrayList<>(numNodes);
         for (int i = 0; i < numNodes; i++) {
-            nodes.add(new LinkedList<Node>());
+            adjacencies.add(new LinkedList<Node>());
         }
         this.isDirected = isDirected;
         this.numNodes = numNodes;
@@ -56,20 +57,20 @@ public class Graph {
      * Not allow self loop or multiedge
      */
     private boolean addEdge(int from, int to, boolean isDirected) {
-        if (from == to || this.nodes.get(from).contains(new Node(to))) {
+        if (from == to || this.adjacencies.get(from).contains(new Node(to))) {
             return false;
         }
-        nodes.get(from).add(new Node(to));
+        adjacencies.get(from).add(new Node(to));
         if (isDirected == false) {
-            nodes.get(to).add(new Node(from));
+            adjacencies.get(to).add(new Node(from));
         }
         return true;
     }
 
     public void printGraph() {
-        for (int i = 0; i < nodes.size(); i++) {
+        for (int i = 0; i < adjacencies.size(); i++) {
             System.out.print(i);
-            LinkedList<Node> nodeLL = nodes.get(i);
+            LinkedList<Node> nodeLL = adjacencies.get(i);
             for (Node node : nodeLL) {
                 System.out.print("->" + node.id);
             }
@@ -78,7 +79,7 @@ public class Graph {
     }
 
     public boolean hasEdge(int source, int destination) {
-        return this.nodes.get(source).contains(new Node(destination));
+        return this.adjacencies.get(source).contains(new Node(destination));
     }
 
     /**

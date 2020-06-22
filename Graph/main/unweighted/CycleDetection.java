@@ -30,7 +30,7 @@ public class CycleDetection {
     private static boolean hasCycleDFS(Graph g, Graph.Node start, boolean[] discovered, boolean[] processing, int[] parent) {
         discovered[start.id] = true;
         processing[start.id] = true;
-       for (Graph.Node node: g.nodes.get(start.id)) {
+       for (Graph.Node node: g.adjacencies.get(start.id)) {
             if (!g.isDirected && discovered[node.id] && parent[start.id] != node.id) { // Back edge (undirected graph)
                 return true;
             } else if (g.isDirected && processing[node.id]) {  // Back edge (directed graph)

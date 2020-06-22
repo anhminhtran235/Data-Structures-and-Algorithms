@@ -32,7 +32,7 @@ public class TopologicalSort {
 
     private static void topoDFS(Graph g, Graph.Node source, boolean[] visited, Stack<Integer> topoOrdering) {
         visited[source.id] = true;
-        for (Graph.Node adjNode: g.nodes.get(source.id)) {
+        for (Graph.Node adjNode: g.adjacencies.get(source.id)) {
             if (!visited[adjNode.id]) {
                 topoDFS(g, adjNode, visited, topoOrdering);
             }
@@ -49,7 +49,7 @@ public class TopologicalSort {
 
         // Init inDegree arr
         for (int i = 0; i < inDegree.length; i++) {
-            for (Graph.Node adjNode: g.nodes.get(i)) {
+            for (Graph.Node adjNode: g.adjacencies.get(i)) {
                 inDegree[adjNode.id]++;
             }
         }
@@ -65,7 +65,7 @@ public class TopologicalSort {
         while (!sourceVertex.isEmpty()) {
             int source = sourceVertex.poll();
             topoOrder.add(source);
-            for (Graph.Node adjNode: g.nodes.get(source)) {
+            for (Graph.Node adjNode: g.adjacencies.get(source)) {
                 inDegree[adjNode.id]--;
                 if (inDegree[adjNode.id] == 0) {
                     sourceVertex.add(adjNode.id);

@@ -62,7 +62,7 @@ public class DepthFirstSearch {
             System.out.print("Visited " + start.id + " (parent: " + parent[start.id] + "), ");
         }
 
-       for (Graph.Node node: g.nodes.get(start.id)){
+       for (Graph.Node node: g.adjacencies.get(start.id)){
             if (!visited[node.id]) {
                 parent[node.id] = start.id;
                 dfs(g, node, visited, parent, entryTime, exitTime, print);
