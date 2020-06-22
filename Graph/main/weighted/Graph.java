@@ -51,13 +51,7 @@ public class Graph {
     }
 
     public boolean addEdge(int from, int to, int weight) {
-        if (from >= this.numNodes || from < 0) {
-            throw new IndexOutOfBoundsException("Invalid from node: " + from);
-        } else if (to >= this.numNodes || to < 0) {
-            throw new IndexOutOfBoundsException("Invalid to node: " + to);
-        }
-
-        if (adjacencies.get(from).contains(new Graph.Node(to))) {
+        if (from == to || this.adjacencies.get(from).contains(new Node(to))) {
             return false;
         }
         adjacencies.get(from).add(new Node(to, weight));
