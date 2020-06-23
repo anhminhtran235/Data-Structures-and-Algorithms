@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Heap<T extends Comparable<T>>{
     public Heap(Class<T> c, int capacity) {
-        if (capacity < 0) {
+        if (capacity <= 0) {
             capacity = 1;
         }
         @SuppressWarnings("unchecked")
@@ -24,27 +24,29 @@ public class Heap<T extends Comparable<T>>{
         this.classParameter = c;
     }
 
-
+    // Only allow unique object
     public void insert(T data) {
+        if (hm.containsKey(data)) {
+            return;
+        }
         ensureCapacity(classParameter);
         this.arr[size++] = data;
-        heapifyUp(size - 1);
+        hm.put(data, size - 1);
+        bubbleUp(size - 1);
     }
 
     public T popMin() {
         if (size == 0) {
             return null;
         } 
-        T temp = arr[0];
-        arr[0] = arr[size - 1];
-        arr[size - 1] = temp;
-        T result = arr[size - 1];
+        T result = arr[0];
+        swap(0, size - 1);
         size--;
-        heapifyDown(0);
+        bubbleDown(0);
         return result;
     }
 
-    public T getKey(T equivalentObject) {
+    public T getObject(T equivalentObject) {
         int index = hm.get(equivalentObject);
         return arr[index];
     }
@@ -61,29 +63,36 @@ public class Heap<T extends Comparable<T>>{
         }
     }
 
-    private void heapifyUp(int index) {
+    private void bubbleUp(int index) {
         while (hasP(index)) {
             int parentIndex = getPIndex(index);
             T parent = arr[parentIndex];
             T curNode = arr[index];
             if (curNode.compareTo(parent) < 0) {
                 swap(index, parentIndex);
-            } 
+            } else {
+                break;
+            }
             index = parentIndex;
         }
     } 
 
-    private void heapifyDown(int index) {
+    private void bubbleDown(int index) {
         while (hasLC(index)) {
             int smaller = getLCIndex(index);
             if (hasRC(index)) {
-                // If RC < LC, smaller = RCIndex
-                if (arr[smaller].compareTo(arr[getRCIndex(index)]) < 0) {
+                // If LC > RC, smaller = RCIndex
+                if (arr[smaller].compareTo(arr[getRCIndex(index)]) > 0) {
                     smaller = getRCIndex(index);
                 }
             }
-            swap(index, smaller);
-            index = smaller;
+            if (arr[index].compareTo(arr[smaller]) > 0) {
+                swap(index, smaller);
+                index = smaller;
+            } else {
+                break;
+            }
+            
         }
     }
 
@@ -91,9 +100,14 @@ public class Heap<T extends Comparable<T>>{
         // Update hashMap
         this.hm.put(arr[i], j);
         this.hm.put(arr[j], i);
+
         T temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     private boolean hasLC(int index) {
@@ -115,6 +129,7 @@ public class Heap<T extends Comparable<T>>{
     private int getPIndex(int index) {
         return (index - 1) / 2;
     }
+
     private T[] arr;
     private HashMap<T, Integer> hm;
     private int size;
