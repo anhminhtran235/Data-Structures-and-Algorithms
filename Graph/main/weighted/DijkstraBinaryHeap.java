@@ -60,7 +60,7 @@ public class DijkstraBinaryHeap {
         }
         
 
-        while (true) {
+        while (!minHeap.isEmpty()) {
             NodeWrapper picked = minHeap.popMin();
             if (picked.distance == Integer.MAX_VALUE) {
                 break;
@@ -70,8 +70,8 @@ public class DijkstraBinaryHeap {
             for (Graph.Node node : g.adjacencies.get(picked.node.id)) {
                 int index = minHeap.getIndex(new NodeWrapper(node, 0, -1));
                 if (minHeap.arr[index].distance > picked.distance + node.weight) {
-                    minHeap.arr[index].distance = node.weight;
-                    minHeap.arr[index].parent = node.id;
+                    minHeap.arr[index].distance = picked.distance + node.weight;
+                    minHeap.arr[index].parent = picked.node.id;
                     minHeap.bubbleUp(index);
                     if (minHeap.arr[index].equals(new NodeWrapper(node, 0, -1))) {
                         minHeap.bubbleDown(index);
@@ -83,6 +83,8 @@ public class DijkstraBinaryHeap {
         if (distance[destination] == Integer.MAX_VALUE) {
             System.out.println("There are no path from " + source + " to " + destination);
         } else {
+            System.out.print("The shortest path from " + source + " to " + destination +
+                                 " has length " + distance[destination] + ": ");
             printPath(source, destination, parent);
         }
     }
