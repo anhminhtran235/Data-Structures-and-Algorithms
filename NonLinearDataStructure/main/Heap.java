@@ -46,9 +46,9 @@ public class Heap<T extends Comparable<T>>{
         return result;
     }
 
-    public T getObject(T equivalentObject) {
+    public int getIndex(T equivalentObject) {
         int index = hm.get(equivalentObject);
-        return arr[index];
+        return index;
     }
 
     private void ensureCapacity(Class<T> c) {
@@ -63,7 +63,7 @@ public class Heap<T extends Comparable<T>>{
         }
     }
 
-    private void bubbleUp(int index) {
+    public void bubbleUp(int index) {
         while (hasP(index)) {
             int parentIndex = getPIndex(index);
             T parent = arr[parentIndex];
@@ -77,7 +77,7 @@ public class Heap<T extends Comparable<T>>{
         }
     } 
 
-    private void bubbleDown(int index) {
+    public void bubbleDown(int index) {
         while (hasLC(index)) {
             int smaller = getLCIndex(index);
             if (hasRC(index)) {
@@ -130,7 +130,7 @@ public class Heap<T extends Comparable<T>>{
         return (index - 1) / 2;
     }
 
-    private T[] arr;
+    public T[] arr;
     private HashMap<T, Integer> hm;
     private int size;
     private int capacity;
