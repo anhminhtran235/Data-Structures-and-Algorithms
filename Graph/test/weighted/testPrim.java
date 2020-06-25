@@ -5,8 +5,8 @@ import Graph.main.weighted.Prim;
 
 public class testPrim {
     public static void main(String[] args) {
-        int numVertices = 15;
-        int numEdges = 50;
+        int numVertices = 4;
+        int numEdges = 5;
         boolean isDirected = false;
         boolean allowNegativeWeight = true;
         Graph g = Graph.generateRandomGraph(numVertices, numEdges, isDirected, allowNegativeWeight);

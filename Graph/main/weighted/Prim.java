@@ -27,33 +27,36 @@ public class Prim {
         int totalWeight = 0;
         List<Edge> edges = new ArrayList<>();
         Heap<NodeWrapper> minHeap = new Heap<>(NodeWrapper.class);
-        minHeap.insert(new NodeWrapper(new Graph.Node(0), 0, -1));
-        for (int i = 1; i < g.numNodes; i++) {
-            minHeap.insert(new NodeWrapper(new Graph.Node(i), 100000, -1));
+        boolean[] hasPicked = new boolean[g.numNodes];
+
+        hasPicked[0] = true;
+        for (Graph.Node adj : g.adjacencies.get(0)) {
+            minHeap.insert(new NodeWrapper(adj, adj.weight, 0));
         }
+
         while (!minHeap.isEmpty()) {
             NodeWrapper picked = minHeap.popMin();
-            if (picked.distance == Integer.MAX_VALUE) {
-                break;
-            }
+            hasPicked[picked.node.id] = true;
             for (Graph.Node adjNode : g.adjacencies.get(picked.node.id)) {
-                Integer index = minHeap.getIndex(new NodeWrapper(adjNode, 0, -1));
-                if (index == null) {
+                if (hasPicked[adjNode.id]) {
                     continue;
                 }
-                if (minHeap.arr[index].distance > adjNode.weight) {
-                    minHeap.arr[index].distance = adjNode.weight;
-                    minHeap.arr[index].parent = picked.node.id;
-                    minHeap.bubbleUp(index);
-                    if (minHeap.arr[index].equals(new NodeWrapper(adjNode, 0, -1))) {
-                        minHeap.bubbleDown(index);
+                Integer index = minHeap.getIndex(new NodeWrapper(adjNode, 0, -1));
+                if (index == null) {
+                    minHeap.insert(new NodeWrapper(adjNode, adjNode.weight, picked.node.id));
+                } else {
+                    if (minHeap.arr[index].distance > adjNode.weight) {
+                        minHeap.arr[index].distance = adjNode.weight;
+                        minHeap.arr[index].parent = picked.node.id;
+                        minHeap.bubbleUp(index);
+                        if (minHeap.arr[index].equals(new NodeWrapper(adjNode, 0, -1))) {
+                            minHeap.bubbleDown(index);
+                        }
                     }
                 }
             }
-            if (picked.node.id != 0) {
-                edges.add(new Edge(picked.parent, picked.node.id, picked.distance));
-                totalWeight += picked.distance;
-            }
+            edges.add(new Edge(picked.parent, picked.node.id, picked.distance));
+            totalWeight += picked.distance;
         }
 
         if (edges.size() == g.numNodes - 1) {
