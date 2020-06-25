@@ -24,11 +24,7 @@ public class Heap<T extends Comparable<T>>{
         this.classParameter = c;
     }
 
-    // Only allow unique object
     public void insert(T data) {
-        if (hm.containsKey(data)) {
-            return;
-        }
         ensureCapacity(classParameter);
         this.arr[size++] = data;
         hm.put(data, size - 1);
@@ -43,11 +39,12 @@ public class Heap<T extends Comparable<T>>{
         swap(0, size - 1);
         size--;
         bubbleDown(0);
+        this.hm.remove(result);
         return result;
     }
 
-    public int getIndex(T equivalentObject) {
-        int index = hm.get(equivalentObject);
+    public Integer getIndex(T equivalentObject) {
+        Integer index = hm.get(equivalentObject);
         return index;
     }
 
@@ -70,10 +67,10 @@ public class Heap<T extends Comparable<T>>{
             T curNode = arr[index];
             if (curNode.compareTo(parent) < 0) {
                 swap(index, parentIndex);
+                index = parentIndex;
             } else {
                 break;
             }
-            index = parentIndex;
         }
     } 
 
@@ -92,7 +89,6 @@ public class Heap<T extends Comparable<T>>{
             } else {
                 break;
             }
-            
         }
     }
 

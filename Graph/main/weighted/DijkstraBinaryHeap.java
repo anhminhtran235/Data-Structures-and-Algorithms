@@ -4,40 +4,6 @@ import java.util.*;
 
 import NonLinearDataStructure.main.Heap;
 
-class NodeWrapper implements Comparable<NodeWrapper>{
-    public Graph.Node node;
-    public int distance;
-    public int parent;
-    public NodeWrapper(Graph.Node node, int distance, int parent) {
-        this.node = node;
-        this.distance = distance;
-        this.parent = parent;
-    }
-
-    @Override
-    public int compareTo(NodeWrapper other) {
-        if (this.node.id == other.node.id) {
-            return 0;
-        } else {
-            return this.distance - other.distance;
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof NodeWrapper)) {
-            return false;
-        }
-        NodeWrapper other = (NodeWrapper)o;
-        return this.node.equals(other.node);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.node.hashCode();
-    }
-}
-
 public class DijkstraBinaryHeap {
     public static void printShortestPath(Graph g, int source, int destination) {
         if (hasNegativeWeight(g)) {
@@ -68,7 +34,8 @@ public class DijkstraBinaryHeap {
             distance[picked.node.id] = picked.distance;
             parent[picked.node.id] = picked.parent;
             for (Graph.Node node : g.adjacencies.get(picked.node.id)) {
-                int index = minHeap.getIndex(new NodeWrapper(node, 0, -1));
+                Integer index = minHeap.getIndex(new NodeWrapper(node, 0, -1));
+                if (index == null) continue;
                 if (minHeap.arr[index].distance > picked.distance + node.weight) {
                     minHeap.arr[index].distance = picked.distance + node.weight;
                     minHeap.arr[index].parent = picked.node.id;
