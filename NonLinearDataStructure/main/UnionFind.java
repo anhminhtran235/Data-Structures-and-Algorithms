@@ -1,5 +1,7 @@
 package NonLinearDataStructure.main;
 
+import java.util.*;
+
 class UnionNode {
     public UnionNode(int id) {
         this.parent = id;
@@ -11,8 +13,8 @@ class UnionNode {
     public int rank;
 }
 
-public class UnionFindByRank {
-    public UnionFindByRank(int n) {
+public class UnionFind {
+    public UnionFind(int n) {
         arr = new UnionNode[n];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = new UnionNode(i);
@@ -38,9 +40,13 @@ public class UnionFindByRank {
             if (arr[root1].rank == arr[root2].rank) {
                 arr[root2].rank += 1;
             }
+            compressPath(id1, root2);
+            compressPath(id2, root2);
         } else {
             arr[root2].parent = root1;
             arr[root1].size += arr[root2].size;
+            compressPath(id1, root1);
+            compressPath(id2, root1);
         }
     }
 
@@ -50,6 +56,34 @@ public class UnionFindByRank {
 
     public int getSize(int id) {
         return arr[id].size;
+    }
+
+    public void printAllUnions() {
+        int count = 1;
+        Set<Integer> hasCount = new HashSet<>();
+        for (int i = 0; i < arr.length; i++) {
+            int root = find(i);
+            if (!hasCount.contains(root)) {
+                System.out.print("Union #" + (count++) + " (root " + root + 
+                    ", size " + arr[root].size + ", rank " + arr[root].rank + "): ");
+                for (int j = 0; j < arr.length; j++) {
+                    if (find(j) == root) {
+                        System.out.print(j + " ");
+                    }
+                }
+                hasCount.add(root);
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
+
+    private void compressPath(int id, int root) {
+        while (id != root) {
+            int parent = arr[id].parent;
+            arr[id].parent = root;
+            id = parent;
+        }
     }
 
     private UnionNode[] arr;
