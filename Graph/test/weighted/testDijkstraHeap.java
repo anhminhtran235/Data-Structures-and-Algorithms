@@ -14,11 +14,14 @@ public class testDijkstraHeap {
 
         System.out.println("Graph " + (isDirected ? "(directed):" : "(undirected):"));
         g.printGraph();
+        System.out.println();
+        System.out.println("Dijkstra Binary Heap: ");
         DijkstraBinaryHeap.printShortestPath(g, 1, 2);
         DijkstraBinaryHeap.printShortestPath(g, 1, 3);
         DijkstraBinaryHeap.printShortestPath(g, 2, 1);
         DijkstraBinaryHeap.printShortestPath(g, 3, 4);
         System.out.println();
+        System.out.println("Dijkstra Naive: ");
         DijkstraNaive.printShortestPath(g, 1, 2);
         DijkstraNaive.printShortestPath(g, 1, 3);
         DijkstraNaive.printShortestPath(g, 2, 1);

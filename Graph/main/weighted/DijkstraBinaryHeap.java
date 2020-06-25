@@ -17,31 +17,30 @@ public class DijkstraBinaryHeap {
         Arrays.fill(parent, -1);
 
         Heap<NodeWrapper> minHeap = new Heap<>(NodeWrapper.class);
-        for (int i = 0; i < g.numNodes; i++) {
-            if (i == source) {
-                minHeap.insert(new NodeWrapper(new Graph.Node(i), 0, -1));
-            } else {
-                minHeap.insert(new NodeWrapper(new Graph.Node(i), Integer.MAX_VALUE, -1));
-            }            
+        minHeap.insert(new NodeWrapper(new Graph.Node(source), 0, -1));
+        for (Graph.Node adjNode : g.adjacencies.get(source)) {
+            minHeap.insert(new NodeWrapper(adjNode, adjNode.weight, source));
         }
-        
 
         while (!minHeap.isEmpty()) {
             NodeWrapper picked = minHeap.popMin();
-            if (picked.distance == Integer.MAX_VALUE) {
-                break;
-            }
             distance[picked.node.id] = picked.distance;
             parent[picked.node.id] = picked.parent;
-            for (Graph.Node node : g.adjacencies.get(picked.node.id)) {
-                Integer index = minHeap.getIndex(new NodeWrapper(node, 0, -1));
-                if (index == null) continue;
-                if (minHeap.arr[index].distance > picked.distance + node.weight) {
-                    minHeap.arr[index].distance = picked.distance + node.weight;
-                    minHeap.arr[index].parent = picked.node.id;
-                    minHeap.bubbleUp(index);
-                    if (minHeap.arr[index].equals(new NodeWrapper(node, 0, -1))) {
-                        minHeap.bubbleDown(index);
+            for (Graph.Node adjNode : g.adjacencies.get(picked.node.id)) {
+                if (distance[adjNode.id] != Integer.MAX_VALUE) { // We have picked this node
+                    continue;
+                }
+                Integer index = minHeap.getIndex(new NodeWrapper(adjNode, 0, -1));
+                if (index == null) {
+                    minHeap.insert(new NodeWrapper(adjNode, picked.distance + adjNode.weight, picked.node.id));
+                } else {
+                    if (minHeap.arr[index].distance > picked.distance + adjNode.weight) {
+                        minHeap.arr[index].distance = picked.distance + adjNode.weight;
+                        minHeap.arr[index].parent = picked.node.id;
+                        minHeap.bubbleUp(index);
+                        if (minHeap.arr[index].equals(new NodeWrapper(adjNode, 0, -1))) {
+                            minHeap.bubbleDown(index);
+                        }
                     }
                 }
             }
