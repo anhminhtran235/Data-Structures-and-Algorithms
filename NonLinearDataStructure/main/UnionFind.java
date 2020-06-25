@@ -13,6 +13,9 @@ class UnionNode {
     public int rank;
 }
 
+/**
+ * Union find by rank with path compression
+ */
 public class UnionFind {
     public UnionFind(int n) {
         arr = new UnionNode[n];
@@ -22,10 +25,16 @@ public class UnionFind {
     }
 
     public int find(int id) {
+        int temp = id;
         while (id != arr[id].parent) {
             id = arr[id].parent;
         }
+        compressPath(temp, id);
         return id;
+    }
+
+    public boolean connected(int id1, int id2) {
+        return find(id1) == find(id2);
     }
 
     public void union(int id1, int id2) {
@@ -40,13 +49,9 @@ public class UnionFind {
             if (arr[root1].rank == arr[root2].rank) {
                 arr[root2].rank += 1;
             }
-            compressPath(id1, root2);
-            compressPath(id2, root2);
         } else {
             arr[root2].parent = root1;
             arr[root1].size += arr[root2].size;
-            compressPath(id1, root1);
-            compressPath(id2, root1);
         }
     }
 
