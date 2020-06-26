@@ -4,22 +4,8 @@ import java.util.*;
 
 import NonLinearDataStructure.main.Heap;
 
-class Edge {
-    public Edge(int node1, int node2, int weight) {
-        this.node1 = node1;
-        this.node2 = node2;
-        this.weight = weight;
-    }
-    public int node1;
-    public int node2;
-    public int weight;
-    public String toString() {
-        return node1 + "-" + node2 + "(weight:" + weight + ")";
-    }
-}
-
 public class Prim {
-    public static void printMinimumSpanningTree(Graph g) {
+    public static void printMST(Graph g) {
         if (g.isDirected) {
             System.out.println("Minimum Spanning Tree is for undirected graph only");
             return;
