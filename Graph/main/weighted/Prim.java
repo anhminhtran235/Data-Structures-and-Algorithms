@@ -10,7 +10,7 @@ public class Prim {
             System.out.println("Minimum Spanning Tree is for undirected graph only");
             return;
         }
-        int totalWeight = 0;
+        long totalWeight = 0;
         List<Edge> edges = new ArrayList<>();
         Heap<NodeWrapper> minHeap = new Heap<>(NodeWrapper.class);
         boolean[] hasPicked = new boolean[g.numNodes];

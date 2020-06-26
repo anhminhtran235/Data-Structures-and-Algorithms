@@ -22,7 +22,7 @@ public class Kruskal {
 
         UnionFind unionFind = new UnionFind(g.numNodes);
         List<Edge> result = new ArrayList<>();
-        int totalWeight = 0;
+        long totalWeight = 0;
 
         for (int i = 0; i < edges.size(); i++) {
             Edge e = edges.get(i);
