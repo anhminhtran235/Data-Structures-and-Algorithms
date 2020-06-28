@@ -18,19 +18,37 @@ public class BellmanFordRecursive {
             }
         }
 
-        long[][] distance = new long[g.numNodes][g.numNodes];
+        long[][] distance = new long[g.numNodes][g.numNodes + 1];
         for (long[] arr: distance) {
             Arrays.fill(arr, Integer.MAX_VALUE);
         }
         for (int i = 0; i < g.numNodes; i++) {
-            distance[source][i] = 0;
+            distance[source][i] = 0; // Distance from source to source goes through at most i edges = 0
         }
         for (int i = 0; i < g.numNodes; i++) {
-            shortestPath(matrix, distance, source, i, g.numNodes - 1);
+            shortestPath(matrix, distance, source, i, g.numNodes);
+        }
+
+        for (int i = 0; i < g.numNodes; i++) {
+            shortestPath(matrix, distance, source, i, g.numNodes);
+        }
+        boolean hasNegativeCycle = false;
+        for (int i = 0; i < g.numNodes; i++) {
+            if (distance[i][g.numNodes] != distance[i][g.numNodes-1]) {
+                hasNegativeCycle = true;
+            }
+        }
+        if (!hasNegativeCycle) {
+            System.out.print("Shortest path from " + source + " to the rest: ");
+            for (int i = 0; i < g.numNodes; i++) {
+                System.out.print(distance[i][g.numNodes-1] + " ");
+            }
+        } else {
+            System.out.println("Negative cycle exist!");
         }
     }
 
-    // Find the shortest path from source to dest which goes through at most k edges
+    // Find the shortest path from source to dest, going through at most k edges
     private static long shortestPath(int[][] matrix, long[][] dist, int source, int dest, int k) {
         if (k == 0) {
             return (source == dest) ? 0 : Integer.MAX_VALUE;
@@ -48,4 +66,6 @@ public class BellmanFordRecursive {
 
         return dist[dest][k];
     }
+
+
 }
