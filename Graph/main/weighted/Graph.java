@@ -89,12 +89,12 @@ public class Graph {
      * Not allow multi edge or self loop
      */
     public static Graph generateRandomGraph(int numVertices, int numEdges, boolean isDirected, boolean negativeWeight) {
-        if (isDirected && numEdges > numVertices * numVertices / 2
-            || !isDirected && numEdges > numVertices * numVertices) {
+        if (!isDirected && numEdges > numVertices * (numVertices - 1) / 2
+            || isDirected && numEdges > numVertices * (numVertices-1)) {
                 throw new IllegalArgumentException("Cannot have that many edges!");
             }
 
-        final int MAX_WEIGHT = 1000;
+        final int MAX_WEIGHT = 10;
         Graph g = new Graph(numVertices, isDirected);
         for (int i = 0; i < numEdges; i++) {
             int vertex1 = (int)(Math.random() * numVertices);

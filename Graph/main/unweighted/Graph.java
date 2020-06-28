@@ -86,8 +86,8 @@ public class Graph {
      * Not allow multi edge or self loop
      */
     public static Graph generateRandomGraph(int numVertices, int numEdges, boolean isDirected) {
-        if (isDirected && numEdges > numVertices * numVertices / 2
-            || !isDirected && numEdges > numVertices * numVertices) {
+        if (!isDirected && numEdges > numVertices * (numVertices - 1) / 2
+            || isDirected && numEdges > numVertices * (numVertices-1)) {
                 throw new IllegalArgumentException("Cannot have that many edges!");
             }
 
