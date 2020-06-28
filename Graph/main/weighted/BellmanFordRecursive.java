@@ -23,7 +23,7 @@ public class BellmanFordRecursive {
             Arrays.fill(arr, Integer.MAX_VALUE);
         }
         for (int i = 0; i < g.numNodes; i++) {
-            distance[source][i] = 0; // Distance from source to source goes through at most i edges = 0
+            distance[source][i] = 0; // Shortest distance from source to source goes through at most i edges = 0
         }
         for (int i = 0; i < g.numNodes; i++) {
             shortestPath(matrix, distance, source, i, g.numNodes);
