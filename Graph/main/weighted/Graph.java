@@ -94,7 +94,7 @@ public class Graph {
                 throw new IllegalArgumentException("Cannot have that many edges!");
             }
 
-        final int MAX_WEIGHT = 10;
+        final int MAX_WEIGHT = 100;
         Graph g = new Graph(numVertices, isDirected);
         for (int i = 0; i < numEdges; i++) {
             int vertex1 = (int)(Math.random() * numVertices);

@@ -39,7 +39,7 @@ public class BellmanFordRecursive {
             }
         }
         if (!hasNegativeCycle) {
-            System.out.print("Shortest path from " + source + " to the rest: ");
+            System.out.print("Shortest distances from " + source + " to the rest: ");
             for (int i = 0; i < g.numNodes; i++) {
                 System.out.print(distance[i][g.numNodes-1] + " ");
             }
