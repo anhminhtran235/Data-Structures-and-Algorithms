@@ -1,7 +1,5 @@
 package Graph.main.weighted;
 
-import java.util.*;
-
 public class BellmanFordRecursive {
     public static void printShortestPaths(Graph g, int source) {
         Graph gReverse = new Graph(g.numNodes, g.isDirected);
