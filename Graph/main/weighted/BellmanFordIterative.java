@@ -35,7 +35,7 @@ public class BellmanFordIterative {
         for (long i : distance) {
             String info; 
             if (i == Integer.MAX_VALUE) info = "Infinity";
-            else if (i == -Integer.MIN_VALUE) info = "-Infinity";
+            else if (i == Integer.MIN_VALUE) info = "-Infinity";
             else info = i + "";
             System.out.print(info + " ");
         }
