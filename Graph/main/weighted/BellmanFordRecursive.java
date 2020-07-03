@@ -14,7 +14,7 @@ public class BellmanFordRecursive {
             distance[i] = shortestPathHelper(gReverse, source, i, g.numNodes - 1);
         }
 
-        System.out.print("Shortest paths from " + source + " to the rest: ");
+        System.out.print("Shortest distances from " + source + " to the rest: ");
         for (long i : distance) {
             String info; 
             if (i == Integer.MAX_VALUE) info = "Infinity";

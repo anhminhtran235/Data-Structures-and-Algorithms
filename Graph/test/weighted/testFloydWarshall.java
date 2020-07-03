@@ -1,6 +1,7 @@
 package Graph.test.weighted;
 
-import Graph.main.weighted.FloydWarshall;
+import Graph.main.weighted.FloydWarshallIterative;
+import Graph.main.weighted.FloydWarshallRecursive;
 import Graph.main.weighted.Graph;
 
 public class testFloydWarshall {
@@ -13,6 +14,8 @@ public class testFloydWarshall {
 
         g.printGraph();
         System.out.println("All pair shortest paths: ");
-        FloydWarshall.printAllPairShortestPaths(g);
+        FloydWarshallRecursive.printAllPairShortestPaths(g);
+        System.out.println("Correct all pair shortest paths: ");
+        FloydWarshallIterative.correctAllPairShortestPaths(g);
     }
 }

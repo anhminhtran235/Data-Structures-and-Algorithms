@@ -9,7 +9,7 @@ public class BellmanFordIterative {
         Arrays.fill(distance, Integer.MAX_VALUE);
         distance[source] = 0;
 
-        // Find shortest paths from source to the rest
+        // Find shortest distances from source to the rest
         for (int t = 0; t < g.numNodes - 1; t++) {
             for (int i = 0; i < g.numNodes; i++) {
                 for (Graph.Node adj : g.adjacencies.get(i)) {
@@ -31,7 +31,7 @@ public class BellmanFordIterative {
             }
         }
 
-        System.out.print("Shortest paths from " + source + " to the rest: ");
+        System.out.print("Shortest distances from " + source + " to the rest: ");
         for (long i : distance) {
             String info; 
             if (i == Integer.MAX_VALUE) info = "Infinity";
@@ -92,7 +92,7 @@ public class BellmanFordIterative {
         }
 
         // Print the array containing the shortest distance to every node
-        System.out.println("Correct shortest paths from " + start + " to the rest: ");
+        System.out.println("Correct shortest distances from " + start + " to the rest: ");
         for (double i : dist) {
             System.out.print(i + " ");
         }

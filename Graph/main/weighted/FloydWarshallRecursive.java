@@ -1,6 +1,6 @@
 package Graph.main.weighted;
 
-public class FloydWarshall {
+public class FloydWarshallRecursive {
     public static void printAllPairShortestPaths(Graph g) {
         int[][] matrix = new int[g.numNodes][g.numNodes];
         for (int i = 0; i < matrix.length; i++) {
@@ -27,7 +27,7 @@ public class FloydWarshall {
         }
 
         for (int i = 0; i < g.numNodes; i++) {
-            System.out.print("Shortest paths from " + i + " to the rest: ");
+            System.out.print("Shortest distances from " + i + " to the rest: ");
             for (int dist : distance[i]) {
                 System.out.print(dist + " ");
             }
