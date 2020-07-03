@@ -48,4 +48,69 @@ public class FloydWarshallIterative {
             System.out.println();
         }
     }
+
+    public static void printAllPairShortestPaths(Graph g) {
+        int[][] matrix = new int[g.numNodes][g.numNodes];
+        int[][] distance = new int[g.numNodes][g.numNodes];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                if (i != j) {
+                    matrix[i][j] = Integer.MAX_VALUE;
+                    distance[i][j] = Integer.MAX_VALUE;
+                } else {
+                    distance[i][j] = 0;
+                }
+            }
+        }
+        for (int i = 0; i < g.numNodes; i++) {
+            for (Graph.Node adj : g.adjacencies.get(i)) {
+                matrix[i][adj.id] = adj.weight;
+                distance[i][adj.id] = adj.weight;
+                if (!g.isDirected) {
+                    matrix[adj.id][i] = adj.weight;
+                    distance[adj.id][i] = adj.weight;
+                }
+            }
+        }
+
+        for (int k = 0; k < g.numNodes; k++) {
+            for (int i = 0; i < g.numNodes; i++) {
+                for (int j = 0; j < g.numNodes; j++) {
+                    if (distance[i][k] != Integer.MAX_VALUE &&
+                        matrix[k][j] != Integer.MAX_VALUE) {
+
+                        if (distance[i][j] > distance[i][k] + matrix[k][j]) {
+                            distance[i][j] = distance[i][k] + matrix[k][j];
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int k = 0; k < g.numNodes; k++) {
+            for (int i = 0; i < g.numNodes; i++) {
+                for (int j = 0; j < g.numNodes; j++) {
+                    if (distance[i][k] != Integer.MAX_VALUE &&
+                        matrix[k][j] != Integer.MAX_VALUE) {
+
+                        if (distance[i][j] > distance[i][k] + matrix[k][j]) {
+                            distance[i][j] = Integer.MIN_VALUE;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < g.numNodes; i++) {
+            System.out.print("Shortest distance from " + i + " to the rest: ");
+            for (int j = 0; j < g.numNodes; j++) {
+                String res;
+                if (distance[i][j] == Integer.MAX_VALUE) res = "Infinity";
+                else if (distance[i][j] == Integer.MIN_VALUE) res = "-Infinity";
+                else res = distance[i][j] + "";
+                System.out.print(res + " ");
+            }
+            System.out.println();
+        }
+    }
 }

@@ -9,7 +9,7 @@ public class testFloydWarshall {
         int numVertices = 10;
         int numEdges = 20;
         boolean isDirected = true;
-        boolean allowNegativeWeight = false;
+        boolean allowNegativeWeight = true;
         Graph g = Graph.generateRandomGraph(numVertices, numEdges, isDirected, allowNegativeWeight);
 
         g.printGraph();
@@ -17,5 +17,7 @@ public class testFloydWarshall {
         FloydWarshallRecursive.printAllPairShortestPaths(g);
         System.out.println("Correct all pair shortest paths: ");
         FloydWarshallIterative.correctAllPairShortestPaths(g);
+        System.out.println("Iterative all pair shortest paths: ");
+        FloydWarshallIterative.printAllPairShortestPaths(g);
     }
 }
